@@ -112,9 +112,9 @@
                 objLoader.setMaterials(materials);
                 objLoader.setPath("sandal4/");
                 objLoader.load("sandal4.obj", function(object) {
-                    // object.scale.x = 21;
-                    // object.scale.y = 21;
-                    // object.position.z = 10;
+                    object.position.x = 1;
+                    object.position.y = -1;
+                    object.position.z = -3;
                     console.log(object);
                     sandalMesh.add(object);
                     scene.add(sandalMesh);
