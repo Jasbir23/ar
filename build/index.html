@@ -4,9 +4,21 @@
 		<style>
 			body { margin: 0; }
 			canvas { width: 100%; height: 100% }
+            #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            font-size: 80px;
+            top: 80px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 100;
+            display:block;
+        }
 		</style>
 	</head>
 	<body>
+        <span id="info">Loading</span>
         <script src="js/three.js"></script>
 <script src="js/OrbitControls.js"></script>
 <script src="js/OBJLoader.js"></script>
@@ -23,11 +35,11 @@
             var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
             // directionalLight.castShadow = true;
             scene.add( directionalLight );
-            var directionalLight2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+            var directionalLight2 = new THREE.DirectionalLight( 0xffffff, 0.7 );
             // directionalLight2.castShadow = true;
             directionalLight2.position.x += 10;
             scene.add( directionalLight2 );
-            var directionalLight3 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+            var directionalLight3 = new THREE.DirectionalLight( 0xffffff, 0.7 );
             // directionalLight3.castShadow = true;
             directionalLight3.position.x -= 10;
             scene.add( directionalLight3 );
@@ -39,33 +51,10 @@
             // directionalLight3.castShadow = true;
             directionalLight4.position.z -= 10;
             scene.add( directionalLight4 );
-            var directionalLight5 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+            var directionalLight5 = new THREE.DirectionalLight( 0xffffff, 0.7 );
             // directionalLight3.castShadow = true;
             directionalLight5.position.z = 10;
             scene.add( directionalLight5 );
-
-            // var ambinetLight = new THREE.AmbientLight( 0xffffff );
-            // scene.add(ambinetLight);
-            // var lighta = new THREE.HemisphereLight( 0xffffff, 0xffffff, 60 );
-            // // scene.add( lighta );
-            // var light = new THREE.PointLight( 0xffffff, 1, 310 );
-            // light.position.set( 0, 100, 0 );
-            // var light2 = new THREE.PointLight( 0xffffff, 1, 310 );
-            // light2.position.set( 0, -100, 0 );
-            // lightMesh.add( light );
-            // lightMesh.add( light2 );
-            // var light3 = new THREE.PointLight( 0xffffff, 1, 210 );
-            // light3.position.set( 0, 0, -100 );
-            // lightMesh.add(light3);
-            // var light4 = new THREE.PointLight( 0xffffff, 1, 150 );
-            // light4.position.set( 0, 0, 100 );
-            // lightMesh.add(light4);
-            // var light5 = new THREE.PointLight( 0xffffff, 1, 110 );
-            // light5.position.set( 100, 0, 0 );
-            // lightMesh.add(light5);
-            // var light6 = new THREE.PointLight( 0xffffff, 1, 110 );
-            // light6.position.set( -100, 0, 0 );
-            // lightMesh.add(light6);
             scene.add(lightMesh);
             var mtlLoader = new THREE.MTLLoader();
             mtlLoader.setPath("heels_4/");
@@ -75,6 +64,7 @@
                 objLoader.setMaterials(materials);
                 objLoader.setPath("heels_4/");
                 objLoader.load("heels_4.obj", function(object) {
+                    document.getElementById("info").innerHTML = "HASTINAPUR"
                     // object.position.x = -2.5;
                     object.position.y = -1;
                     // object.position.z = -3;
