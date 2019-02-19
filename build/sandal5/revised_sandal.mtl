@@ -1,0 +1,38 @@
+newmtl sandal_copy:sandals_new:aiStandardSurface1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+newmtl sandal_copy:sandals_new:sandals_new:aiStandardSurface1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+newmtl sandal_copy:sandals_new:sandals_new:blinn1SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl sandal_copy:sandals_new:sandals_new:blinn2SG
+illum 4
+Kd 0.10 0.04 0.00
+Ka 0.25 0.09 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.00 0.00 0.00
+newmtl sandal_copy:sandals_new:sandals_new:lambert2SG
+illum 4
+Kd 0.00 0.00 0.01
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl sandal_copy:sandals_new:sandals_new:lambert3SG
+illum 4
+Kd 0.45 0.21 0.07
+Ka 0.27 0.21 0.18
+Tf 1.00 1.00 1.00
+Ni 1.00

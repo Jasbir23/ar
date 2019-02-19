@@ -1,74 +1,3 @@
-<!-- <html>
-		<style>
-                body { margin: 0 }
-                canvas { width: 100%; height: 100% }
-            </style>
-<body style="margin : 0px; overflow: hidden;">
-<script src="js/three.js"></script>
-<script src="js/OrbitControls.js"></script>
-<script src="js/OBJLoader.js"></script>
-    <script src="js/MTLLoader.js"></script>
-    <script>
-        var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-            document.body.appendChild( renderer.domElement );
-            // renderer.setClearColor(0xEEEEEE);
-            var ambinetLight = new THREE.AmbientLight( 0xfffff );
-        var scene = new THREE.Scene();
-        var sandalMesh = new THREE.Mesh();
-        var camera = new THREE.PerspectiveCamera(
-            1,
-            window.innerWidth / window.innerHeight,
-            0.1,
-            5000
-            );
-        // scene.add(camera);
-        sandalMesh.add(camera);
-            scene.add(ambinetLight);
-
-    var mtlLoader = new THREE.MTLLoader();
-    mtlLoader.setPath("sandal_object/");
-    mtlLoader.load("sandal_object.mtl", function(materials) {
-      materials.preload();
-      var objLoader = new THREE.OBJLoader();
-      objLoader.setMaterials(materials);
-      objLoader.setPath("sandal_object/");
-      objLoader.load("sandal_object.obj", function(object) {
-        // object.scale.x = 21;
-        // object.scale.y = 21;
-        // object.position.z = 10;
-        console.log(object);
-        sandalMesh.add(object);
-        scene.add(sandalMesh);
-      });
-    });
-    var mtlLoader = new THREE.MTLLoader();
-    mtlLoader.setPath("pig/");
-    mtlLoader.load("pig.mtl", function(materials) {
-      materials.preload();
-      var objLoader = new THREE.OBJLoader();
-      objLoader.setMaterials(materials);
-      objLoader.setPath("pig/");
-      objLoader.load("pig.obj", function(object) {
-        object.scale.x = 2;
-        object.scale.y = 2;
-        object.scale.z = 2;
-        console.log(object);
-        // scene.add(object);
-        sandalMesh.add(object);
-      });
-    });
-    var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-    var animate = function () {
-				requestAnimationFrame( animate );
-				renderer.render( scene, camera );
-			};
-
-			animate();
-        </script>
-
-</body>
-</html> -->
 <html>
 	<head>
 		<title>3D showroom</title>
@@ -84,38 +13,74 @@
 <script src="js/MTLLoader.js"></script>
 		<script>
 			var scene = new THREE.Scene();
+            var lightMesh= new THREE.Mesh();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
             var sandalMesh = new THREE.Mesh();
-			var renderer = new THREE.WebGLRenderer();
+            var renderer = new THREE.WebGLRenderer();
             renderer.setSize( window.innerWidth, window.innerHeight );
-            renderer.setClearColor(0xccffff);
+            renderer.setClearColor(0x808080);
 			document.body.appendChild( renderer.domElement );
-            // var ambinetLight = new THREE.AmbientLight( 0xfffff );
+            var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+            // directionalLight.castShadow = true;
+            scene.add( directionalLight );
+            var directionalLight2 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+            // directionalLight2.castShadow = true;
+            directionalLight2.position.x += 10;
+            scene.add( directionalLight2 );
+            var directionalLight3 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+            // directionalLight3.castShadow = true;
+            directionalLight3.position.x -= 10;
+            scene.add( directionalLight3 );
+            var directionalLight4 = new THREE.DirectionalLight( 0xffffff, 1 );
+            // directionalLight3.castShadow = true;
+            directionalLight4.position.y -= 10;
+            scene.add( directionalLight4 );
+            var directionalLight4 = new THREE.DirectionalLight( 0xffffff, 0.1 );
+            // directionalLight3.castShadow = true;
+            directionalLight4.position.z -= 10;
+            scene.add( directionalLight4 );
+            var directionalLight5 = new THREE.DirectionalLight( 0xffffff, 0.5 );
+            // directionalLight3.castShadow = true;
+            directionalLight5.position.z = 10;
+            scene.add( directionalLight5 );
+
+            // var ambinetLight = new THREE.AmbientLight( 0xffffff );
             // scene.add(ambinetLight);
-            var light = new THREE.PointLight( 0xffffff, 1, 100 );
-            light.position.set( 0, 20, 0 );
-            var light2 = new THREE.PointLight( 0xffffff, 1, 100 );
-            light2.position.set( 0, -20, 0 );
-            scene.add( light );
-            scene.add( light2 );
-            var light3 = new THREE.PointLight( 0xffffff, 1, 100 );
-            light3.position.set( 0, 0, -20 );
-            scene.add(light3);
-            var light4 = new THREE.PointLight( 0xffffff, 1, 100 );
-            light4.position.set( 0, 0, 20 );
-            scene.add(light4);
+            // var lighta = new THREE.HemisphereLight( 0xffffff, 0xffffff, 60 );
+            // // scene.add( lighta );
+            // var light = new THREE.PointLight( 0xffffff, 1, 310 );
+            // light.position.set( 0, 100, 0 );
+            // var light2 = new THREE.PointLight( 0xffffff, 1, 310 );
+            // light2.position.set( 0, -100, 0 );
+            // lightMesh.add( light );
+            // lightMesh.add( light2 );
+            // var light3 = new THREE.PointLight( 0xffffff, 1, 210 );
+            // light3.position.set( 0, 0, -100 );
+            // lightMesh.add(light3);
+            // var light4 = new THREE.PointLight( 0xffffff, 1, 150 );
+            // light4.position.set( 0, 0, 100 );
+            // lightMesh.add(light4);
+            // var light5 = new THREE.PointLight( 0xffffff, 1, 110 );
+            // light5.position.set( 100, 0, 0 );
+            // lightMesh.add(light5);
+            // var light6 = new THREE.PointLight( 0xffffff, 1, 110 );
+            // light6.position.set( -100, 0, 0 );
+            // lightMesh.add(light6);
+            scene.add(lightMesh);
             var mtlLoader = new THREE.MTLLoader();
-            mtlLoader.setPath("sandal4/");
-            mtlLoader.load("sandal4.mtl", function(materials) {
+            mtlLoader.setPath("heels_4/");
+            mtlLoader.load("heels_4.mtl", function(materials) {
             materials.preload();
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
-                objLoader.setPath("sandal4/");
-                objLoader.load("sandal4.obj", function(object) {
-                    object.position.x = 1;
+                objLoader.setPath("heels_4/");
+                objLoader.load("heels_4.obj", function(object) {
+                    // object.position.x = -2.5;
                     object.position.y = -1;
-                    object.position.z = -3;
-                    console.log(object);
+                    // object.position.z = -3;
+                    object.scale.x = 0.3;
+                    object.scale.y = 0.3;
+                    object.scale.z = 0.3;
                     sandalMesh.add(object);
                     scene.add(sandalMesh);
                 });
@@ -124,7 +89,8 @@
     var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
 			var animate = function () {
 				requestAnimationFrame( animate );
-
+                // lightMesh.rotation.x += 0.01;
+                // lightMesh.rotation.y += 0.01;
 				renderer.render( scene, camera );
 			};
 

@@ -1,0 +1,101 @@
+newmtl sandal_copy:blinn1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.03 0.02 0.02
+newmtl sandal_copy:blinn2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl sandal_copy:sandals_new:sandals_new:lambert2SG
+illum 4
+Kd 0.00 0.01 0.08
+Ka 0.00 0.02 0.15
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl sandal_copy:sandals_new:sandals_new:lambert3SG
+illum 4
+Kd 0.54 0.33 0.25
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl sandal_copy1:blinn3SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 0.93 0.93 0.93
+Ni 1.00
+Ks 1.00 1.00 1.00
+newmtl sandal_copy1:sandal_copy:blinn1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.05 0.05 0.05
+newmtl sandal_copy1:sandal_copy:blinn2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl sandal_copy1:sandal_copy:blinn3SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 0.93 0.93 0.93
+Ni 1.00
+Ks 1.00 1.00 1.00
+newmtl sandal_copy1:sandal_copy:sandals_new:sandals_new:blinn1SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl sandal_copy1:sandal_copy:sandals_new:sandals_new:blinn2SG
+illum 4
+Kd 0.41 0.15 0.00
+Ka 0.73 0.27 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.32 0.21 0.01
+newmtl sandal_copy1:sandal_copy:sandals_new:sandals_new:lambert2SG
+illum 4
+Kd 0.00 0.01 0.08
+Ka 0.00 0.02 0.15
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl sandal_copy1:sandal_copy:sandals_new:sandals_new:lambert3SG
+illum 4
+Kd 0.54 0.33 0.25
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl sandal_copy1:sandal_copy:sandals_new:typeBlinn1SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl sandals_new:sandals_new:blinn1SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl sandals_new:sandals_new:blinn2SG
+illum 4
+Kd 0.15 0.06 0.02
+Ka 0.87 0.60 0.50
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.00 0.00 0.00
