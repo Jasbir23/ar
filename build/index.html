@@ -57,13 +57,13 @@
             scene.add( directionalLight5 );
             scene.add(lightMesh);
             var mtlLoader = new THREE.MTLLoader();
-            mtlLoader.setPath("burger2/");
-            mtlLoader.load("burger2.mtl", function(materials) {
+            mtlLoader.setPath("burg_12/");
+            mtlLoader.load("burg_12.mtl", function(materials) {
             materials.preload();
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
-                objLoader.setPath("burger2/");
-                objLoader.load("burger2.obj", function(object) {
+                objLoader.setPath("burg_12/");
+                objLoader.load("burg_12.obj", function(object) {
                     document.getElementById("info").innerHTML = ""
                     // object.position.x = -2.5;
                     object.position.y = -1;
@@ -95,16 +95,13 @@
 <body style="margin : 0px; overflow: hidden;">
   <a-scene embedded arjs="sourceType: webcam;">
       <a-marker preset="hiro">
-        <!-- Adding an OBJ file to an AR Project-->
-        <!-- <div class="model"> -->
         <a-entity class="model"
-            obj-model="obj: url(./burg_12/burg_12.obj);
-            mtl: url(./burg_12/burg_12.mtl)"
-            position="0 0 3"
-            rotation="-30 0 0"
-            scale="0.6 0.6 0.6">
+        id="model"
+            obj-model="obj: url(./burg_test2/burg_test44.obj);
+            mtl: url(./burg_test2/burg_test44.mtl)"
+            rotation="0 0 0"
+            scale="0.2 0.2 0.2">
         </a-entity>
-    <!-- </div> -->
       </a-marker>
   <a-entity camera>
   </a-entity>

@@ -1,0 +1,9 @@
+newmtl burg_12:burg_12
+illum 4
+Kd 0.00 0.00 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd burg_12.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
