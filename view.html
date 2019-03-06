@@ -57,13 +57,13 @@
             scene.add( directionalLight5 );
             scene.add(lightMesh);
             var mtlLoader = new THREE.MTLLoader();
-            mtlLoader.setPath("burg_test2/");
-            mtlLoader.load("burg_test44.mtl", function(materials) {
+            mtlLoader.setPath("heels_4/");
+            mtlLoader.load("heels_4.mtl", function(materials) {
             materials.preload();
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
-                objLoader.setPath("burg_test2/");
-                objLoader.load("burg_test44.obj", function(object) {
+                objLoader.setPath("heels_4/");
+                objLoader.load("heels_4.obj", function(object) {
                     document.getElementById("info").innerHTML = ""
                     // object.position.x = -2.5;
                     object.position.y = -1;
