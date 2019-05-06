@@ -21,6 +21,7 @@
         <span id="info">Loading</span>
         <script src="js/three.js"></script>
 <script src="js/OrbitControls.js"></script>
+<script src="js/GLTFLoader.js"></script>
 <script src="js/OBJLoader.js"></script>
 <script src="js/MTLLoader.js"></script>
 		<script>
@@ -57,30 +58,65 @@
             scene.add( directionalLight5 );
             scene.add(lightMesh);
             var mtlLoader = new THREE.MTLLoader();
-            mtlLoader.setPath("heels_4/");
-            mtlLoader.load("heels_4.mtl", function(materials) {
+            mtlLoader.setPath("stadium/");
+            mtlLoader.load("Ballpark.mtl", function(materials) {
             materials.preload();
                 var objLoader = new THREE.OBJLoader();
                 objLoader.setMaterials(materials);
-                objLoader.setPath("heels_4/");
-                objLoader.load("heels_4.obj", function(object) {
+                objLoader.setPath("stadium/");
+                objLoader.load("Ballpark.obj", function(object) {
                     document.getElementById("info").innerHTML = ""
                     // object.position.x = -2.5;
-                    object.position.y = -1;
-                    object.position.z = 2;
+                    // object.position.y = -1;
+                    // object.position.z = 2;
                     object.scale.x = 0.3;
                     object.scale.y = 0.3;
                     object.scale.z = 0.3;
+                    var material = new THREE.MeshPhongMaterial( {
+                        skinning: true,
+                        color: 0x4286f4,
+                        emissive: 0x072534,
+                        side: THREE.DoubleSide,
+                        flatShading: true
+                    } )
+                    var mesh = new THREE.SkinnedMesh(object,material);
+                    // var skeleton = new THREE.SkeletonHelper( object );
+					// skeleton.visible = false;
+					// scene.add( skeleton );
+                    // console.log(mesh, skeleton);
                     sandalMesh.add(object);
                     scene.add(sandalMesh);
                 });
             });
+            // var loader = new THREE.GLTFLoader();
+            // var skeleton;
+            // loader.load( 'glTF/RiggedFigure.gltf', function ( gltf ) {
+            //             var material = new THREE.MeshPhongMaterial( {
+            //             skinning: true,
+            //             color: 0x4286f4,
+            //             emissive: 0x072534,
+            //             side: THREE.DoubleSide,
+            //             flatShading: true
+            //         } )
+            //         var mesh = new THREE.SkinnedMesh(gltf.scene,material);
+            //         skeleton = new THREE.SkeletonHelper( gltf.scene );
+			// 		skeleton.visible = false;
+			// 		scene.add( skeleton );
+            //         console.log(mesh, gltf, skeleton);
+            //     scene.add( gltf.scene );
+
+            // }, undefined, function ( error ) {
+
+            //     console.error( error );
+
+            // } );
 			camera.position.z = 5;
     var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
 			var animate = function () {
 				requestAnimationFrame( animate );
                 // lightMesh.rotation.x += 0.01;
                 // lightMesh.rotation.y += 0.01;
+                // skeleton.bones[6].rotation.y += 0.01;
 				renderer.render( scene, camera );
 			};
 

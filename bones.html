@@ -1,0 +1,308 @@
+<html>
+	<head>
+		<title>3D showroom</title>
+		<style>
+			body { margin: 0; background: white }
+			canvas { width: 100%; height: 100% }
+            #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            font-size: 80px;
+            top: 80px;
+            font-weight: bold;
+            text-align: center;
+            z-index: 100;
+            display:block;
+        }
+        .container {
+            width: 100%;
+        }
+        #button {
+            width: 100%; /* Full-width */
+            height: 100px; /* Specified height */
+            background: red; /* Grey background */
+        }
+		</style>
+	</head>
+	<body>
+        <script src="js/three.js"></script>
+        <script src="js/three.proton.min.js"></script>
+        <script src='js/dat.gui.min.js'></script>
+<script src="js/OrbitControls.js"></script>
+<script src="js/OBJLoader.js"></script>
+<script src="js/MTLLoader.js"></script>
+<script>
+    function handleMov(e) {
+        console.log(e)
+    }
+    var scene = new THREE.Scene();
+    var allPageMeshes = [], allGenericAnimations = [];
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+    // scene.fog = new THREE.FogExp2(0xffffff, 1, 1000);
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setClearColor(0x000000);
+    var directionalLight = new THREE.DirectionalLight( 0xffffff,  1);
+            directionalLight.castShadow = true;
+            directionalLight.position.y = -5;
+            scene.add( directionalLight );
+            var directionalLight2 = new THREE.DirectionalLight( 0xffffff,  1);
+            directionalLight2.castShadow = true;
+            directionalLight2.position.y = 5;
+            scene.add( directionalLight2 );
+    document.body.appendChild( renderer.domElement );
+    var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
+    camera.position.z = 80;
+    camera.position.y = 20;
+        // mesh.skeleton.bones[0].rotation.y +=  0.01;
+
+    var animate = function () {
+        requestAnimationFrame( animate );
+        astMesh.rotation.x+= 0.01;
+        astMesh.rotation.y+= 0.01;
+        // allPageMeshes[0] && (allPageMeshes[0].skeleton.bones[0].rotation.y += 0.01);
+        // mesh.skeleton.bones[0].rotation.y +=  0.01;
+        // mesh.skeleton.bones[1].rotation.y +=  0.009;
+        // mesh.skeleton.bones[2].rotation.y +=  0.008;
+        // mesh.skeleton.bones[3].rotation.y +=  0.007;
+        // mesh.skeleton.bones[4].rotation.y +=  0.006;
+        proton.update();
+        renderGenericAnimations();
+        renderer.render( scene, camera );
+    };
+    function renderGenericAnimations () {
+        allGenericAnimations.map((item, index) => {
+            console.log(item, '+++++')
+            if(item.currentValue < item.toValue) {
+                item.property.skeleton.bones[0].rotation.y += item.type === 'open' ? item.toValue / item.duration : -item.toValue / item.duration;
+                item.property.skeleton.bones[0].position.z += item.type === 'open' ? -index * 0.02 + 0.15 : index * 0.02 - 0.15;
+                item.currentValue += item.toValue / item.duration;
+            } else item.isFinished = true;
+        });
+        allGenericAnimations = allGenericAnimations.filter(item => item.isFinished !== true);
+    }
+    function renderOpeningAnimation (pageIndex, duration, type) {
+        for(var i = 19; i >= pageIndex; i--) {
+            allGenericAnimations.push({
+                property: allPageMeshes[i],
+                toValue: Math.PI,
+                duration: duration,
+                currentValue: 0,
+                type: type
+            });
+        }
+    }
+    function createGeometry( sizing, i ) {
+
+    // var geometry = new THREE.CylinderBufferGeometry(
+    // 	5, // radiusTop
+    // 	5, // radiusBottom
+    // 	sizing.height, // height
+    // 	8, // radiusSegments
+    // 	sizing.segmentCount * 3, // heightSegments
+    // 	true // openEnded
+    // );
+    var geometry = new THREE.BoxBufferGeometry( 32,32, i === 19 || i === 0 ? 0.5 : 0.1, 32,32 );
+
+    var position = geometry.attributes.position;
+    console.log(geometry);
+
+    var vertex = new THREE.Vector3();
+
+    var skinIndices = [];
+    var skinWeights = [];
+
+    for ( var i = 0; i < position.count; i ++ ) {
+
+        vertex.fromBufferAttribute( position, i );
+
+        var y = ( vertex.y + sizing.halfHeight );
+
+        var skinIndex = Math.floor( y / sizing.segmentHeight );
+        var skinWeight = ( y % sizing.segmentHeight ) / sizing.segmentHeight;
+
+        skinIndices.push( skinIndex, skinIndex + 1, 0, 0 );
+        skinWeights.push( 1 - skinWeight, skinWeight, 0, 0 );
+
+    }
+
+    geometry.addAttribute( 'skinIndex', new THREE.Uint16BufferAttribute( skinIndices, 4 ) );
+    geometry.addAttribute( 'skinWeight', new THREE.Float32BufferAttribute( skinWeights, 4 ) );
+
+    return geometry;
+
+    }
+
+    function createBones( sizing ) {
+
+    bones = [];
+
+    var prevBone = new THREE.Bone();
+    bones.push( prevBone );
+    prevBone.position.x = - sizing.halfHeight;
+    // prevBone.position.x = -10;
+
+    for ( var i = 0; i < sizing.segmentCount; i ++ ) {
+
+        var bone = new THREE.Bone();
+        bone.position.x = sizing.segmentHeight;
+        bones.push( bone );
+        prevBone.add( bone );
+        prevBone = bone;
+
+    }
+
+    return bones;
+
+    }
+
+    function createMesh( geometry, bones, color ) {
+
+    var material = new THREE.MeshPhongMaterial( {
+        skinning: true,
+        color: color,
+        emissive: 0x072534,
+        side: THREE.DoubleSide,
+        flatShading: true
+    } );
+
+    var mesh = new THREE.SkinnedMesh( geometry,	material );
+    var skeleton = new THREE.Skeleton( bones );
+
+    mesh.add( bones[ 0 ] );
+
+    mesh.bind( skeleton );
+
+    // skeletonHelper = new THREE.SkeletonHelper( mesh );
+    // skeletonHelper.material.linewidth = 2;
+    // scene.add( skeletonHelper );
+
+    return mesh;
+
+    }
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    var astMesh = new THREE.Mesh();
+    function addAsteroids() {
+    for (var i = 0; i < 40; i++) {
+        var userLight = i % 3 === 0 ? new THREE.SphereGeometry(2, 32, 32) : i % 2 === 0 ? new THREE.BoxBufferGeometry(2,2,2) : new THREE.ConeGeometry( 2, 4, 32 );
+			let randColor = getRandomColor();
+		  var userLightMat = new THREE.MeshPhongMaterial({
+		    emissive: randColor,
+		    emissiveIntensity: 1,
+		    color: randColor
+		  });
+		  let userLightMesh = new THREE.Mesh(userLight, userLightMat);
+            userLightMesh.position.x = Math.random() * 100 - 50;
+            userLightMesh.position.y = Math.random() * 100 - 50;
+            userLightMesh.position.z = Math.random() * 100 - 50;
+        astMesh.add(userLightMesh);
+    }
+    scene.add(astMesh);
+    }
+
+    function initBones() {
+
+    var segmentHeight = 1;
+    var segmentCount = 32;
+    var height = segmentHeight * segmentCount;
+    var halfHeight = height * 0.5;
+        addProton();
+    var sizing = {
+        segmentHeight: segmentHeight,
+        segmentCount: segmentCount,
+        height: height,
+        halfHeight: halfHeight
+    };
+    // addAsteroids();
+    for(var i=0; i< 20; i++) {
+        var geometry = createGeometry( sizing, i );
+        var bones = createBones( sizing );
+        mesh = createMesh( geometry, bones, i === 19 || i === 0 ? 0x156289 : 0xffffff );
+        mesh.rotation.x = Math.PI/2;
+            // mesh.skeleton.bones[0].rotation.y +=  i < 10 ? 0 : Math.PI / 4;
+            // mesh.skeleton.bones[1].rotation.y +=  i < 10 ? 0 : 0.1;
+            // mesh.skeleton.bones[2].rotation.y +=  i < 10 ? 0 : 0.1;
+            // mesh.skeleton.bones[25].rotation.y +=  i < 10 ? 0 : -0.023;
+            // mesh.skeleton.bones[26].rotation.y +=  i < 10 ? 0 : -0.024;
+            // mesh.skeleton.bones[27].rotation.y +=  i < 10 ? 0 : -0.025;
+            // mesh.skeleton.bones[28].rotation.y +=  i < 10 ? 0 : -0.026;
+            // mesh.skeleton.bones[29].rotation.y +=  i < 10 ? 0 : -0.027;
+            // mesh.skeleton.bones[30].rotation.y +=  i < 10 ? 0 : -0.028;
+            // mesh.skeleton.bones[31].rotation.y +=  i < 10 ? 0 : -0.025;
+            // mesh.skeleton.bones[32].rotation.y +=  i < 10 ? 0 : -0.025;
+            // mesh.skeleton.bones && mesh.skeleton.bones.map((item,index) => item.rotation.y += i < 10 ? 0 : index * 0.003)
+            // mesh.skeleton.bones[5].rotation.y +=  i < 10 ? 0 : 0.03;
+            mesh.position.y = i * 0.2;
+            // mesh.skeleton.bones[0].rotation.x =  Math.PI / 2;
+        console.log(mesh);
+        allPageMeshes.push(mesh);
+        scene.add( mesh );
+    }
+    var mtlLoader = new THREE.MTLLoader();
+            mtlLoader.setPath("stadium/");
+            mtlLoader.load("Ballpark.mtl", function(materials) {
+            materials.preload();
+                var objLoader = new THREE.OBJLoader();
+                objLoader.setMaterials(materials);
+                objLoader.setPath("stadium/");
+                objLoader.load("Ballpark.obj", function(object) {
+                    // object.position.x = -2.5;
+                    object.position.y = -100;
+                    object.position.z = 2;
+                    object.scale.x = 30;
+                    object.scale.y = 30;
+                    object.scale.z = 30;
+                    scene.add(object);
+                });
+            });
+    renderOpeningAnimation(10, 20,'open');
+    setTimeout(() => renderOpeningAnimation(10,20,'close'), 2000);
+    }
+    var proton, emitter;
+    function addProton() {
+        proton = new Proton();
+        emitter = new Proton.Emitter();
+        emitter.rate = new Proton.Rate(new Proton.Span(34, 48), new Proton.Span(.2, .5));
+        emitter.addInitialize(new Proton.Mass(1));
+        emitter.addInitialize(new Proton.Radius(new Proton.Span(10, 20)));
+        var position = new Proton.Position();
+        position.addZone(new Proton.BoxZone(2500, 10, 2500));
+        emitter.addInitialize(position);
+        emitter.addInitialize(new Proton.Life(5, 10));
+        emitter.addInitialize(new Proton.Body(createSnow()));
+        emitter.addInitialize(new Proton.Velocity(0, new Proton.Vector3D(0, -1, 0), 90));
+        emitter.addBehaviour(new Proton.RandomDrift(10, 1, 10, .05));
+        emitter.addBehaviour(new Proton.Rotate("random", "random"));
+        emitter.addBehaviour(new Proton.Gravity(2));
+        var sceenZone = new Proton.ScreenZone(camera, renderer, 20, "234");
+        emitter.addBehaviour(new Proton.CrossZone(sceenZone, "dead"));
+        emitter.p.x = 0;
+        emitter.p.y = 800;
+        emitter.emit();
+        proton.addEmitter(emitter);
+        proton.addRender(new Proton.SpriteRender(scene));
+        //Proton.Debug.drawZone(proton,scene,new Proton.BoxZone(800, 10, 800));
+    }
+    function createSnow() {
+        var map = new THREE.TextureLoader().load("https://raw.githubusercontent.com/a-jie/three.proton/master/example/img/snow.png");
+        var material = new THREE.SpriteMaterial({
+            map: map,
+            transparent: true,
+            opacity: .5,
+            color: 0xffffff
+        });
+        return new THREE.Sprite(material);
+    }
+initBones();
+animate();
+</script>
+	</body>
+</html>
