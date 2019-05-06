@@ -66,7 +66,7 @@
         // mesh.skeleton.bones[3].rotation.y +=  0.007;
         // mesh.skeleton.bones[4].rotation.y +=  0.006;
         proton.update();
-        // renderGenericAnimations();
+        renderGenericAnimations();
         renderer.render( scene, camera );
     };
     function renderGenericAnimations () {
@@ -261,8 +261,10 @@
                     scene.add(object);
                 });
             });
+    }
+    document.body.onclick = function(e) {
     renderOpeningAnimation(10, 20,'open');
-    setTimeout(() => renderOpeningAnimation(10,20,'close'), 2000);
+    setTimeout(() => renderOpeningAnimation(10,20,'close'), 1000);
     }
     var proton, emitter;
     function addProton() {
