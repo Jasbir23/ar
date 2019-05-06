@@ -70,7 +70,6 @@
     };
     function renderGenericAnimations () {
         allGenericAnimations.map((item, index) => {
-            console.log(item, '+++++')
             if(item.currentValue < item.toValue) {
                 item.property.skeleton.bones[0].rotation.y += item.type === 'open' ? item.toValue / item.duration : -item.toValue / item.duration;
                 item.property.skeleton.bones[0].position.z += item.type === 'open' ? -index * 0.02 + 0.15 : index * 0.02 - 0.15;
@@ -103,7 +102,6 @@
     var geometry = new THREE.BoxBufferGeometry( 32,32, i === 19 || i === 0 ? 0.5 : 0.1, 32,32 );
 
     var position = geometry.attributes.position;
-    console.log(geometry);
 
     var vertex = new THREE.Vector3();
 
@@ -239,7 +237,6 @@
             // mesh.skeleton.bones[5].rotation.y +=  i < 10 ? 0 : 0.03;
             mesh.position.y = i * 0.2;
             // mesh.skeleton.bones[0].rotation.x =  Math.PI / 2;
-        console.log(mesh);
         allPageMeshes.push(mesh);
         scene.add( mesh );
     }
