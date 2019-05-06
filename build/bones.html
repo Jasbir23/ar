@@ -59,8 +59,6 @@
 
     var animate = function () {
         requestAnimationFrame( animate );
-        astMesh.rotation.x+= 0.01;
-        astMesh.rotation.y+= 0.01;
         // allPageMeshes[0] && (allPageMeshes[0].skeleton.bones[0].rotation.y += 0.01);
         // mesh.skeleton.bones[0].rotation.y +=  0.01;
         // mesh.skeleton.bones[1].rotation.y +=  0.009;
@@ -68,7 +66,7 @@
         // mesh.skeleton.bones[3].rotation.y +=  0.007;
         // mesh.skeleton.bones[4].rotation.y +=  0.006;
         proton.update();
-        renderGenericAnimations();
+        // renderGenericAnimations();
         renderer.render( scene, camera );
     };
     function renderGenericAnimations () {
