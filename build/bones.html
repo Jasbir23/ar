@@ -53,8 +53,7 @@
             scene.add( directionalLight2 );
     document.body.appendChild( renderer.domElement );
     var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-    camera.position.z = 80;
-    camera.position.y = 20;
+    camera.position.z = 120;
         // mesh.skeleton.bones[0].rotation.y +=  0.01;
 
     var animate = function () {
@@ -262,9 +261,10 @@
                 });
             });
     }
+    var isOpen = false;
     document.body.onclick = function(e) {
-    renderOpeningAnimation(10, 20,'open');
-    setTimeout(() => renderOpeningAnimation(10,20,'close'), 1000);
+    renderOpeningAnimation(10, 20,isOpen ? 'close' : 'open');
+    isOpen = !isOpen;
     }
     var proton, emitter;
     function addProton() {
